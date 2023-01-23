@@ -21,7 +21,6 @@ const config = {
     host: "0.0.0.0",
     port: 3000,
     allowedHosts: 'all',
-    server: 'https'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -31,6 +30,10 @@ const config = {
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
+  experiments: {
+    asyncWebAssembly: true,
+  },
+
   module: {
     rules: [
       {
