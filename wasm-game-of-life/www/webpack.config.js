@@ -19,7 +19,7 @@ const config = {
   devServer: {
     open: false,
     host: "0.0.0.0",
-    port: 1200,
+    port: 3000,
     allowedHosts: 'all',
     server: 'https'
   },
