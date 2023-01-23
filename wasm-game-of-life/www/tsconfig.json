@@ -5,7 +5,13 @@
     "module": "es6",
     "target": "es5",
     "allowJs": true,
-    "moduleResolution":"node"
+    "moduleResolution":"node",
+    "sourceMap": true,
+    "lib": [
+      "es5",
+      "dom"
+    ],
+    "noUnusedLocals": true,
   },
   "files": ["src/index.ts"]
 }
