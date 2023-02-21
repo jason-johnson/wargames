@@ -2,7 +2,7 @@ use clap::Parser;
 use petgraph::Graph;
 use petgraph::visit::NodeRef;
 use crate::parse::Args;
-use crate::board::{LocaleInfo, Ways, PoliticalStatus};
+use crate::board::{Locale, Way, PoliticalStatus, Territory};
 
 mod parse;
 mod board;
@@ -10,12 +10,19 @@ mod board;
 fn main() {
     let args = Args::parse();
 
+    let board = board![
+        locale riga (Locale::Bishopric, PoliticalStatus::Teutonic, Territory::Livonia),
+        locale wenden (Locale::Castle, PoliticalStatus::Teutonic, Territory::Livonia),
+        locale tolowa (Locale::Region, PoliticalStatus::Teutonic, Territory::Livonia),
+        way (riga, wenden, Way::Waterway),
+    ];
+
     let mut graph = Graph::new_undirected();
-    let riga = graph.add_node(LocaleInfo { name: String::from("Riga"), conquerable: true, value: 2, political_status: PoliticalStatus::Teutonic});
-    let wenden = graph.add_node(LocaleInfo { name: String::from("Wenden"), conquerable: true, value: 1, political_status: PoliticalStatus::Teutonic});
-    let tolowa = graph.add_node(LocaleInfo { name: String::from("Tolowa"), conquerable: false, value: 0, political_status: PoliticalStatus::Teutonic});
-    graph.add_edge(riga, wenden, Ways::Waterway);
-    graph.add_edge(wenden, tolowa, Ways::Trackway);
+    let riga = graph.add_node((Locale::Bishopric, PoliticalStatus::Teutonic, Territory::Livonia));
+    let wenden = graph.add_node((Locale::Castle, PoliticalStatus::Teutonic, Territory::Livonia));
+    let tolowa = graph.add_node((Locale::Region, PoliticalStatus::Teutonic, Territory::Livonia));
+    graph.add_edge(riga, wenden, Way::Waterway);
+    graph.add_edge(wenden, tolowa, Way::Trackway);
 
     for neighbor in graph.neighbors(wenden) {
         let i = &graph[neighbor];
