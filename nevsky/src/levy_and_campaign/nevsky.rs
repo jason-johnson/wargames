@@ -33,12 +33,21 @@ pub enum Territory {
     Rus,
 }
 
-fn new() -> Graph<(Locale, PoliticalStatus, Territory), Way, Undirected> {
+#[derive(Debug)]
+pub enum Region {
+  Riga,
+  Wenden,
+  Tolowa,
+  Adsel,
+}
+
+pub fn new() -> Graph<(Region, Locale, PoliticalStatus, Territory), Way, Undirected> {
     let result = board![
-        locale riga (Locale::Bishopric, PoliticalStatus::Teutonic, Territory::Livonia),
-        locale wenden (Locale::Castle, PoliticalStatus::Teutonic, Territory::Livonia),
-        locale tolowa (Locale::Region, PoliticalStatus::Teutonic, Territory::Livonia),
+        locale riga (Region::Riga, Locale::Bishopric, PoliticalStatus::Teutonic, Territory::Livonia),
+        locale wenden (Region::Wenden, Locale::Castle, PoliticalStatus::Teutonic, Territory::Livonia),
+        locale tolowa (Region::Tolowa, Locale::Region, PoliticalStatus::Teutonic, Territory::Livonia),
         way (riga, wenden, Way::Waterway),
+        way (wenden, tolowa, Way::Trackway)
     ];
     result
 }
