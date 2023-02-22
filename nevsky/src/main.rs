@@ -1,21 +1,14 @@
 use clap::Parser;
 use petgraph::Graph;
-use petgraph::visit::NodeRef;
 use crate::parse::Args;
-use crate::board::{Locale, Way, PoliticalStatus, Territory};
+use crate::levy_and_campaign::nevsky::{Locale, Way, PoliticalStatus, Territory};
 
 mod parse;
-mod board;
+mod game;
+mod levy_and_campaign;
 
 fn main() {
     let args = Args::parse();
-
-    let board = board![
-        locale riga (Locale::Bishopric, PoliticalStatus::Teutonic, Territory::Livonia),
-        locale wenden (Locale::Castle, PoliticalStatus::Teutonic, Territory::Livonia),
-        locale tolowa (Locale::Region, PoliticalStatus::Teutonic, Territory::Livonia),
-        way (riga, wenden, Way::Waterway),
-    ];
 
     let mut graph = Graph::new_undirected();
     let riga = graph.add_node((Locale::Bishopric, PoliticalStatus::Teutonic, Territory::Livonia));

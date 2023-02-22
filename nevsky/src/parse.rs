@@ -14,7 +14,6 @@ enum Scenario {
 #[derive(Parser, Debug)]
 #[command(term_width = 0)]
 pub struct Args {
-    /// Implicitly using `std::str::FromStr`
     #[arg(short = 'p', long)]
     player: Vec<String>,
 
