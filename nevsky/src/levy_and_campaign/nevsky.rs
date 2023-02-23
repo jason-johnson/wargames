@@ -2,19 +2,30 @@ use crate::board;
 use petgraph::Graph;
 use petgraph::Undirected;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Scenario {
+    PleskauQuickStart,
+    Pleskau,
+    Watland,
+    ReturnOfThePrince,
+    ReturnOfThePrinceNicolle,
+    Peipus,
+    CrusadeOnNovgorod,
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PoliticalStatus {
     Russian,
     Teutonic,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Way {
     Waterway,
     Trackway,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Locale {
     Castle,
     Fort,
@@ -26,14 +37,14 @@ pub enum Locale {
     Region,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Territory {
     Livonia,
     Estonia,
     Rus,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Region {
   Riga,
   Wenden,
