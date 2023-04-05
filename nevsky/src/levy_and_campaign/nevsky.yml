@@ -1,0 +1,6 @@
+riga:
+  local: Bishopric
+  status: Teutonic
+  territory: Livonia
+  neighbors: [wenden]
+  port: true
