@@ -35,7 +35,9 @@
 				"ms-azure-devops.azure-pipelines",
 				"esbenp.prettier-vscode",
 				"rust-lang.rust-analyzer",
-				"github.copilot"
+				"tamasfe.even-better-toml",
+				"github.copilot",
+				"github.copilot-chat"
 			]
 		}
 	}
