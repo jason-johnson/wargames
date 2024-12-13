@@ -34,7 +34,7 @@ fn main() {
     let mut ways = BTreeSet::new();
 
 
-    let mut locs_json = {
+    let locs_json = {
         // Load the first file into a string.
         let text = std::fs::read_to_string("/workspaces/wargames/nevsky/src/levy_and_campaign/nevsky_loc.json").unwrap();
 
