@@ -1,59 +1,39 @@
-use std::env;
 
-use leptos::prelude::*;
-use leptos_router::components::*;
-use leptos_router::path;
+#[cfg(feature = "ssr")]
+#[tokio::main]
+async fn main() {
+    use axum::Router;
+    use leptos::logging::log;
+    use leptos::prelude::*;
+    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use wargames::app::*;
 
-fn main() {
-  dotenv::dotenv().ok();
-  console_error_panic_hook::set_once();
-  let _games_dir = env::var("GAMES_DIRECTORY").expect("GAMES_DIRECTORY not set");
-  
-  mount_to_body(App);
+    let conf = get_configuration(None).unwrap();
+    let addr = conf.leptos_options.site_addr;
+    let leptos_options = conf.leptos_options;
+    // Generate the list of routes in your Leptos App
+    let routes = generate_route_list(App);
+
+    let app = Router::new()
+        .leptos_routes(&leptos_options, routes, {
+            let leptos_options = leptos_options.clone();
+            move || shell(leptos_options.clone())
+        })
+        .fallback(leptos_axum::file_and_error_handler(shell))
+        .with_state(leptos_options);
+
+    // run our app with hyper
+    // `axum::Server` is a re-export of `hyper::Server`
+    log!("listening on http://{}", &addr);
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
 }
 
-#[component]
-fn App() -> impl IntoView {
-    view! {
-        <Router>
-          <header class="bg-teal-800 px-4 text-zinc-100">
-            <nav class="flex justify-between mb-6">
-              <a href="/"><span class="text-xl font-semibold">Wargames</span></a>
-              <div class="flex items-center space-x-4">
-                <a href="/games">Games</a>
-              </div>
-            </nav>
-          </header>
-          <main>
-            // all our routes will appear inside <main>
-            <Routes fallback=|| "Not found.">
-              <Route path=path!("/") view=Home/>
-              <Route path=path!("/games") view=Games/>
-            </Routes>
-          </main>
-      </Router>
-    }
-}
-
-#[component]
-fn Home() -> impl IntoView {
-    let (count, _set_count) = signal(0);
-
-    view! {
-        <div class="container mx-auto">
-            <h1 class="text-4xl font-semibold text-center mt-8">Welcome to Wargames</h1>
-            <p class="text-center mt-4">This is a collection of wargames.</p>
-        </div>
-        <div>Count: {count}</div>
-    }
-}
-
-#[component]
-fn Games() -> impl IntoView {
-    view! {
-        <div class="container mx-auto">
-            <h1 class="text-4xl font-semibold text-center mt-8">Games</h1>
-            <p class="text-center mt-4">Here are the games you can play.</p>
-        </div>
-    }
+#[cfg(not(feature = "ssr"))]
+pub fn main() {
+    // no client-side main function
+    // unless we want this to work with e.g., Trunk for pure client-side testing
+    // see lib.rs for hydration function instead
 }
