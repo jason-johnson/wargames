@@ -1,11 +1,15 @@
+use std::env;
+
 use leptos::prelude::*;
 use leptos_router::components::*;
 use leptos_router::path;
 
 fn main() {
-    console_error_panic_hook::set_once();
-
-    mount_to_body(App);
+  dotenv::dotenv().ok();
+  console_error_panic_hook::set_once();
+  let _games_dir = env::var("GAMES_DIRECTORY").expect("GAMES_DIRECTORY not set");
+  
+  mount_to_body(App);
 }
 
 #[component]
@@ -33,13 +37,14 @@ fn App() -> impl IntoView {
 
 #[component]
 fn Home() -> impl IntoView {
-//    let (count, set_count) = signal(0);
+    let (count, _set_count) = signal(0);
 
     view! {
         <div class="container mx-auto">
             <h1 class="text-4xl font-semibold text-center mt-8">Welcome to Wargames</h1>
             <p class="text-center mt-4">This is a collection of wargames.</p>
         </div>
+        <div>Count: {count}</div>
     }
 }
 
