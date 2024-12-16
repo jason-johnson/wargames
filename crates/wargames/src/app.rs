@@ -2,7 +2,6 @@ use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 use leptos_router::{
     components::{Route, Router, Routes},
-    StaticSegment,
     path,
 };
 
@@ -35,7 +34,7 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="leptos" href="/pkg/wargames.css"/>
 
         // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Title text="Wargames"/>
 
         // content for this welcome page
         <Router>
