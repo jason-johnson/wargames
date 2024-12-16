@@ -1,7 +1,13 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./index.html", "./src/**/*.rs"],
-    theme: {
-      extend: {},
+  content: {
+    files: ["*.html", "crates/wargames/src/**/*.rs"],
+    transform: {
+      rs: (content) => content.replace(/(?:^|\s)class:/g, ' '),
     },
-    plugins: [],
-  };
+  },
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}

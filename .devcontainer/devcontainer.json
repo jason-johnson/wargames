@@ -36,6 +36,7 @@
 				"esbenp.prettier-vscode",
 				"rust-lang.rust-analyzer",
 				"tamasfe.even-better-toml",
+				"bradlc.vscode-tailwindcss",
 				"github.copilot",
 				"github.copilot-chat"
 			]
